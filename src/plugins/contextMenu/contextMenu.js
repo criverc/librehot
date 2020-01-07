@@ -54,6 +54,9 @@ Hooks.getSingleton().register('afterContextMenuExecute');
  * * `'commentsAddEdit'` (with {@link Options#comments} turned on)
  * * `'commentsRemove'` (with {@link Options#comments} turned on)
  *
+ * Also the hot settings variable contextMenuDisableOnUpdate can be set to false if the default behaviour
+ * of disabling and enabling the plugin when updating is not desired.
+ *
  * See [the context menu demo](http://docs.handsontable.com/demo-context-menu.html) for examples.
  *
  * @example
@@ -191,8 +194,12 @@ class ContextMenu extends BasePlugin {
    * Updates the plugin state. This method is executed when {@link Core#updateSettings} is invoked.
    */
   updatePlugin() {
-    this.disablePlugin();
-    this.enablePlugin();
+
+    if (this.hot.getSettings().contextMenuDisableOnUpdate == false) {
+    } else { /* disable and reenable by default */
+        this.disablePlugin();
+        this.enablePlugin();
+    }
 
     super.updatePlugin();
   }
